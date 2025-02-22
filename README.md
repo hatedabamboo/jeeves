@@ -29,3 +29,4 @@ jeeves supports configuration via the environment variables:
 - `OPENAI_API_KEY` your OpenAI API key; obtain one from [OpenAI Platform](https://platform.openai.com/docs/overview) (mandatory).
 - `JEEVES_OPENAI_MODEL` OpenAI model of choice; default is `gpt-4o-mini`, which allows communicate with ChatGPT for free (optional).
 - `JEEVES_LOG_LEVEL` log level; default is `info`; supported values are: `info`, `debug` (optional).
+- `JEEVES_CUSTOM_PROMPT` additional custom message that will be added before each request; default is `""` (optional)

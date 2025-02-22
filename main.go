@@ -54,6 +54,7 @@ func main() {
 	logLevel := getEnvWithDefault("JEEVES_LOG_LEVEL", "info")
 	apiKey := getEnv("OPENAI_API_KEY")
 	model := getEnvWithDefault("JEEVES_OPENAI_MODEL", "gpt-4o-mini")
+	customPrompt := getEnvWithDefault("JEEVES_CUSTOM_PROMPT", "")
 
 	if logLevel == "debug" {
 		fmt.Println("Using model:", model)
@@ -61,14 +62,14 @@ func main() {
 
 	prompt := strings.Join(os.Args[1:], " ")
 	if logLevel == "debug" {
-		fmt.Println("User prompt:", prompt)
+		fmt.Printf("Custom user prompt: %s\nUser prompt: %s\n", customPrompt, prompt)
 	}
 
 	requestBody := map[string]any{
 		"model": model,
 		"store": true,
 		"messages": []map[string]string{
-			{"role": "user", "content": prompt},
+			{"role": "user", "content": customPrompt + prompt},
 		},
 	}
 
@@ -117,10 +118,11 @@ func usage(exitCode int) {
 Usage: jeeves <prompt>
 
 Environment variables:
-OPENAI_API_KEY			your OpenAI API key (mandatory)
-JEEVES_OPENAI_MODEL		specify the model to use, default is "gpt-4o-mini" (optional)
-JEEVES_LOG_LEVEL		sets log level, default is "info" (optional)
-			`)
+OPENAI_API_KEY          your OpenAI API key (mandatory)
+JEEVES_OPENAI_MODEL     specify the model to use, default is "gpt-4o-mini" (optional)
+JEEVES_LOG_LEVEL        sets log level, default is "info" (optional)
+JEEVES_CUSTOM_PROMPT    provides a custom addition to each user request, default is "" (optional)
+				`)
 	os.Exit(exitCode)
 }
 
