@@ -110,6 +110,15 @@ func main() {
 		os.Exit(1)
 	}
 
+	if len(result.Choices) == 0 {
+		fmt.Println("Error: No choices returned in response")
+		if response.StatusCode != http.StatusOK {
+			fmt.Printf("API returned non-200 status code: %d\n", response.StatusCode)
+			fmt.Printf("Response body: %s\n", string(body))
+		}
+		os.Exit(1)
+	}
+
 	fmt.Printf("\n%s\n\n", result.Choices[0].Message.Content)
 }
 
